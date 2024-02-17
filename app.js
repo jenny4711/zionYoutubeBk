@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 app.use('/zs',indexRoutes)
 
-
+//google ai2 :AIzaSyBNttB6_g1eWPoTgM2P4MwA86jjvk9rfwI
 
 const mongoURI = process.env.LOCAL_DB_ADDRESS;
 console.log(mongoURI,'mongouri')
