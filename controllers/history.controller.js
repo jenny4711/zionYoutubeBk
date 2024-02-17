@@ -40,7 +40,7 @@ if(!findVideo){
   transcript.map((item)=>{
     textes.push(item.text)
   })
-
+console.log(textes,'textes!')
  let summaryORG = await createChatWithGoogle(textes)
  let summary = await translateResult(summaryORG,lang)
  if(summaryORG == ""){
@@ -48,6 +48,7 @@ if(!findVideo){
 
  }
  await saveSummary({videoId,summaryORG,lang,summary})
+ console.log(summaryORG ,'summaryORG!')
  res.status(200).json({data:summary,videoId:videoId})
 
 

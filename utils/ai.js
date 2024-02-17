@@ -2,7 +2,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const OpenAI = require('openai');
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY1;
 
 const openai = new OpenAI({
   apiKey: OPENAI_API_KEY
