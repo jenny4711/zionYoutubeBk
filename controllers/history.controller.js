@@ -49,6 +49,7 @@ console.log(textes,'textes!')
  }
  await saveSummary({videoId,summaryORG,lang,summary})
  console.log(summaryORG ,'summaryORG!')
+ console.log(summary,'summary')
  res.status(200).json({data:summary,videoId:videoId})
 
 

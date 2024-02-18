@@ -7,7 +7,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY1;
 const openai = new OpenAI({
   apiKey: OPENAI_API_KEY
 });
-
+console.log(OPENAI_API_KEY ,'openai')
 const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
 
 const createChatWithGoogle = async (prompt, lang) => {
