@@ -40,16 +40,17 @@ if(!findVideo){
   transcript.map((item)=>{
     textes.push(item.text)
   })
-// console.log(textes,'textes!')
+console.log(textes,'textes!')
  let summaryORG = await createChatWithGoogle(textes,ask)
  let summary = await translateResult(summaryORG,lang)
+
  if(summaryORG == ""){
   summaryORG ="Sorry something went wrong. Please try again later!"
 
  }
  await saveSummary({videoId,summaryORG,lang,summary})
-//  console.log(summaryORG ,'summaryORG!')
-//  console.log(summary,'summary')
+ console.log(summaryORG ,'summaryORG!')
+ console.log(summary,'summary')
  res.status(200).json({data:summary,videoId:videoId})
 
 
