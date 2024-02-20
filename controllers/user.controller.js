@@ -1,6 +1,4 @@
-
 const User = require("../model/user");
-
 const userController = {};
 
 userController.autoSignUp = async (req, res) => {
@@ -13,6 +11,7 @@ userController.autoSignUp = async (req, res) => {
       status,
       lang,
       promptStyle,
+     
       credit,
     } = req.body;
     const user = await User.findOne({ email });
@@ -76,8 +75,9 @@ userController.subtractCredit = async (req, res) => {
 
 userController.editLang = async (req, res) => {
   try {
-    const userId = req.params.id;
+    const email = req.params.id;
     const { lang } = req.body;
+    const userId =await User.findOne({email})
     const user = await User.findByIdAndUpdate(
       userId,
       { lang },
@@ -86,6 +86,7 @@ userController.editLang = async (req, res) => {
     if (!user) {
       return res.status(404).json({ status: "Not found the User!", message: "Fail-Update-Lang" });
     }
+   
     return res.status(200).json({ status: 'addLang-success', data: user });
   } catch (error) {
     console.log(error, 'error-editLang');
@@ -95,16 +96,19 @@ userController.editLang = async (req, res) => {
 
 userController.editPromptStyle = async (req, res) => {
   try {
-    const userId = req.params.id;
+    const email = req.params.id;
     const { promptStyle } = req.body;
+    const userId =await User.findOne({email})
     const user = await User.findByIdAndUpdate(
       userId,
       { promptStyle },
       { new: true }
     );
+
     if (!user) {
       return res.status(404).json({ status: "Not found the user!", message: "Fail-update-promtStyle" });
     }
+   
     return res.status(200).json({ status: 'addPromptStyle-success', data: user });
   } catch (error) {
     console.log(error, 'error-editLang');

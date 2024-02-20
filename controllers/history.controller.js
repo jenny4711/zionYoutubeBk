@@ -27,10 +27,10 @@ const{ YoutubeTranscript} = require('youtube-transcript') ;
 
 historyController.makeSummary=async ( req,res)=>{
   try{
-  const {videoId,lang}=req.body;
-  
+  const {videoId,lang,ask}=req.body;
+  console.log(ask,'ask-makeSummary!!!!!!!!!')
     const textes=[]
-    let findVideo = await History.findOne({ videoId, lang });
+    let findVideo = await History.findOne({ videoId, lang ,ask});
 
     if(!videoId){
       return res.status(400).json({message:'VideoId is required'})
@@ -40,16 +40,16 @@ if(!findVideo){
   transcript.map((item)=>{
     textes.push(item.text)
   })
-console.log(textes,'textes!')
- let summaryORG = await createChatWithGoogle(textes)
+// console.log(textes,'textes!')
+ let summaryORG = await createChatWithGoogle(textes,ask)
  let summary = await translateResult(summaryORG,lang)
  if(summaryORG == ""){
   summaryORG ="Sorry something went wrong. Please try again later!"
 
  }
  await saveSummary({videoId,summaryORG,lang,summary})
- console.log(summaryORG ,'summaryORG!')
- console.log(summary,'summary')
+//  console.log(summaryORG ,'summaryORG!')
+//  console.log(summary,'summary')
  res.status(200).json({data:summary,videoId:videoId})
 
 
