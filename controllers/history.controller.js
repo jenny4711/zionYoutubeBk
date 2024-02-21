@@ -62,6 +62,7 @@ console.log(textes,'textes!')
 }
 
   }catch(error){
+    console.log(error,'errorMakeSummary!!!!!')
     res.status(500).json({ message: 'Failed to get transcript', error: error.message });
   }
 }

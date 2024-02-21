@@ -18,7 +18,7 @@ const createChatWithGoogle = async (prompt, ask) => {
 console.log(ask,'askCreateChatWithGoogle')
   //------------------------------------------------------------------------------------------------
   const result = await model.generateContentStream(`${ask} ${prompt}  `);
-  
+  console.log(result,'result!!!!!!!')
   let text = '';
   for await (const chunk of result.stream) {
     const chunkText = chunk.text();
