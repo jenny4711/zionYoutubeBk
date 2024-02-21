@@ -44,8 +44,8 @@ console.log(textes,'textes!')
  let summaryORG = await createChatWithGoogle(textes,ask)
  let summary = await translateResult(summaryORG,lang)
 
- if(summaryORG == ""){
-  summaryORG ="Sorry something went wrong. Please try again later!"
+ if(summaryORG == "" || summary == ""){
+throw new Error("Ai couldn't read summary. Please try again later!")
 
  }
  await saveSummary({videoId,summaryORG,lang,summary})
