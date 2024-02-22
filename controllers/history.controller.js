@@ -33,7 +33,7 @@ historyController.makeSummary=async ( req,res)=>{
   console.log(ask,'ask-makeSummary!!!!!!!!!')
     const textes=[]
     let findVideo = await History.findOne({ videoId, lang });
-
+console.log(videoId,'makeSummary!videoId')
     if(!videoId){
       return res.status(400).json({message:'VideoId is required'})
     }
