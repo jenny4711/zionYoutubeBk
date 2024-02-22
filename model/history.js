@@ -16,6 +16,9 @@ const historySchema = Schema({
     type:String,
     required:true,
   },
+  ask:{
+    type:String,
+  },
   summary:{
     type:String,
     required:true,

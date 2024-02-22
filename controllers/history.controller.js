@@ -3,14 +3,16 @@ const History = require('../model/history')
 const historyController={};
 const{ YoutubeTranscript} = require('youtube-transcript') ;
 
- async function saveSummary({videoId,summaryORG,lang,summary}){
+ async function saveSummary({videoId,summaryORG,lang,ask,summary}){
   try{
-    const video=await History.findOne({ videoId, lang });
+    const video=await History.findOne({ videoId, lang, ask });
+    console.log(ask,'ask-saveSummary!!!!!!!')
     if(!video){
       const newHistory = new History({
         videoId,
         summaryORG,
         lang,
+        ask,
         summary,
       })
       await newHistory.save()
@@ -30,7 +32,7 @@ historyController.makeSummary=async ( req,res)=>{
   const {videoId,lang,ask}=req.body;
   console.log(ask,'ask-makeSummary!!!!!!!!!')
     const textes=[]
-    let findVideo = await History.findOne({ videoId, lang ,ask});
+    let findVideo = await History.findOne({ videoId, lang });
 
     if(!videoId){
       return res.status(400).json({message:'VideoId is required'})
@@ -48,7 +50,7 @@ console.log(textes,'textes!')
 throw new Error("Ai couldn't read summary. Please try again later!")
 
  }
- await saveSummary({videoId,summaryORG,lang,summary})
+ await saveSummary({videoId,summaryORG,lang,ask,summary})
  console.log(summaryORG ,'summaryORG!')
  console.log(summary,'summary')
  res.status(200).json({data:summary,videoId:videoId})
