@@ -2,10 +2,11 @@ const{ translateResult ,createChatWithGoogle } =require('../utils/ai') ;
 const History = require('../model/history')
 const historyController={};
 const{ YoutubeTranscript} = require('youtube-transcript') ;
+const userController = require('./user.controller');
 
  async function saveSummary({videoId,summaryORG,lang,ask,summary}){
   try{
-    const video=await History.findOne({ videoId, lang, ask });
+    const video=await History.findOne({ videoId,lang,ask });
     console.log(ask,'ask-saveSummary!!!!!!!')
     if(!video){
       const newHistory = new History({
@@ -27,12 +28,12 @@ const{ YoutubeTranscript} = require('youtube-transcript') ;
 }
 
 
-historyController.makeSummary=async ( req,res)=>{
+historyController.makeSummary=async (req,res)=>{
   try{
   const {videoId,lang,ask}=req.body;
   console.log(ask,'ask-makeSummary!!!!!!!!!')
     const textes=[]
-    let findVideo = await History.findOne({ videoId, lang });
+    let findVideo = await History.findOne({ videoId,lang,ask });
 console.log(videoId,'makeSummary!videoId')
     if(!videoId){
       return res.status(400).json({message:'VideoId is required'})
@@ -70,5 +71,4 @@ throw new Error("Ai couldn't read summary. Please try again later!")
 }
 
 
-
-module.exports = historyController;
+module.exports=historyController
