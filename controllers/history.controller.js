@@ -38,8 +38,10 @@ console.log(videoId,'makeSummary!videoId')
     if(!videoId){
       return res.status(400).json({message:'VideoId is required'})
     }
-if(!findVideo){
+if(!findVideo && videoId){
   const transcript = await YoutubeTranscript.fetchTranscript(videoId)
+  console.log(transcript,'!!!!!!!!!!!!!!!!!!!!!!!!!transcript!!!!!!!!')
+  if (!transcript || !Array.isArray(transcript)) throw new Error("Couldn't provide the Trancript!")
   transcript.map((item)=>{
     textes.push(item.text)
   })
