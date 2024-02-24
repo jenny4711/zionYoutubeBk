@@ -6,7 +6,7 @@ const userController = require('./user.controller');
 
  async function saveSummary({videoId,summaryORG,lang,ask,summary}){
   try{
-    const video=await History.findOne({ videoId,lang,ask });
+    const video=await History.findOne({videoId,lang,ask});
     console.log(ask,'ask-saveSummary!!!!!!!')
     if(!video){
       const newHistory = new History({
@@ -16,10 +16,12 @@ const userController = require('./user.controller');
         ask,
         summary,
       })
+
       await newHistory.save()
       console.log('save!')
     }else{
-      console.log(video,'video')
+      
+      console.log('already have it','video!!')
     }
   
   }catch(error){
@@ -33,14 +35,15 @@ historyController.makeSummary=async (req,res)=>{
   const {videoId,lang,ask}=req.body;
   console.log(ask,'ask-makeSummary!!!!!!!!!')
     const textes=[]
-    let findVideo = await History.findOne({ videoId,lang,ask });
-console.log(videoId,'makeSummary!videoId')
+
+    let findVideo = await History.findOne({videoId,lang,ask});
+
     if(!videoId){
       return res.status(400).json({message:'VideoId is required'})
     }
-if(!findVideo && videoId){
+if(!findVideo){
+  console.log(findVideo,'findVideo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
   const transcript = await YoutubeTranscript.fetchTranscript(videoId)
-  console.log(transcript,'!!!!!!!!!!!!!!!!!!!!!!!!!transcript!!!!!!!!')
   if (!transcript || !Array.isArray(transcript)) throw new Error("Couldn't provide the Trancript!")
   transcript.map((item)=>{
     textes.push(item.text)
@@ -62,7 +65,7 @@ throw new Error("Ai couldn't read summary. Please try again later!")
 }else{
   let summary=findVideo.summary
   let videoId=findVideo.videoId
-  
+  console.log(summary,'summary-makeSummary!already have it')
   return res.status(200).json({data:summary,videoId:videoId})
 }
 
