@@ -45,7 +45,9 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
 if(!findVideo){
 
   const transcript = await YoutubeTranscript.fetchTranscript(videoId)
-  if (!transcript || !Array.isArray(transcript)) throw new Error("Couldn't provide the Trancript!")
+  if (!transcript || !Array.isArray(transcript) || undefined){
+    console.log(transcript,'transcript!!!!!!!!!!!!')
+  }
   transcript.map((item)=>{
     textes.push(item.text)
   })
