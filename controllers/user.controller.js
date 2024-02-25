@@ -50,63 +50,13 @@ userController.showUserInfo=async(req,res)=>{
   }
 }
 
-// userController.subtractCredit = async (req, res) => {
-//   try {
-//     const {email}=req.body;
-//     const user = await User.findOne({email});
-//     if(user){
-//       if(user.credit > 0){
-//         user.credit -= 1;
-//         await user.save();
-//         return res.status(200).json({ status: 'you have use 1 credit', data: user.credit });
-//       }else{
-//         res.status(400).json({status:'you have over limit now. Please re charge credit!'})
-//       }
-   
-//     }
-//   } catch (error) {
-//     console.error(error, "error!!!!!!!!!!!");
-//     return res.status(400).json({ status: 'you need to register first', error: error });
-//   }
-// };
-
-userController.resetCredit=async(req,res)=>{
-  try{
-    const { email } = req.body;
-    const user = await User.findOne({ email });
-    if(user){
-      const now = new Date();
-      const lastReset = new Date(user.lastCreditReset);
-      const hoursSinceLastReset = Math.abs(now - lastReset) / 36e5; // 36e5 is the number of milliseconds in one hour
-
-      // 24시간이 지났다면 크레딧을 리셋
-      if (hoursSinceLastReset >= 24) {
-        user.credit = 10; // 크레딧을 10으로 리셋
-        user.lastCreditReset = now; // 마지막 리셋 시간을 현재로 업데이트
-        return res.status(200).json({status:'you got daily reset.',data:user.credit})
-      }
-    }
-  }catch(error){
-    console.log(error,'resetCredit!!')
-    return res.status(400).json({status:'reset credit is error',data:error})
-  }
-}
 
 userController.subtractCredit = async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-      // const now = new Date();
-      // const lastReset = new Date(user.lastCreditReset);
-      // const hoursSinceLastReset = Math.abs(now - lastReset) / 36e5; // 36e5 is the number of milliseconds in one hour
-
-      // // 24시간이 지났다면 크레딧을 리셋
-      // if (hoursSinceLastReset >= 24) {
-      //   user.credit = 10; // 크레딧을 10으로 리셋
-      //   user.lastCreditReset = now; // 마지막 리셋 시간을 현재로 업데이트
-      // }
-
+  
       if (user.credit > 0) {
         user.credit -= 1;
         await user.save();

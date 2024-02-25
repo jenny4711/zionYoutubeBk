@@ -8,7 +8,7 @@ router.post("/subcredit",userController.subtractCredit)
 router.put("/editLang/:id",userController.editLang)
 router.put("/editPromptStyle/:id",userController.editPromptStyle)
 router.get('/',userController.showUserInfo)
-router.post("/reset",userController.resetCredit)
+
 
 
 

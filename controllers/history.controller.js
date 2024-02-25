@@ -2,8 +2,7 @@ const{ translateResult ,createChatWithGoogle } =require('../utils/ai') ;
 const History = require('../model/history')
 const historyController={};
 const{ YoutubeTranscript} = require('youtube-transcript') ;
-const userController = require('./user.controller');
-
+const User = require('../model/user')
  async function saveSummary({videoId,summaryORG,lang,ask,summary}){
   try{
     const video=await History.findOne({videoId,lang,ask});
@@ -32,17 +31,19 @@ const userController = require('./user.controller');
 
 historyController.makeSummary=async (req,res)=>{
   try{
-  const {videoId,lang,ask}=req.body;
+  const {videoId,lang,ask,email}=req.body;
   console.log(ask,'ask-makeSummary!!!!!!!!!')
+
     const textes=[]
-
-    let findVideo = await History.findOne({videoId,lang,ask});
-
+    const user = await User.findOne({ email });
+if(user.credit <= 0)throw new Error("your credit is 0 ")
+  let findVideo = await History.findOne({videoId,lang,ask});
+   
     if(!videoId){
       return res.status(400).json({message:'VideoId is required'})
     }
 if(!findVideo){
-  console.log(findVideo,'findVideo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+
   const transcript = await YoutubeTranscript.fetchTranscript(videoId)
   if (!transcript || !Array.isArray(transcript)) throw new Error("Couldn't provide the Trancript!")
   transcript.map((item)=>{
@@ -71,7 +72,7 @@ throw new Error("Ai couldn't read summary. Please try again later!")
 
   }catch(error){
     console.log(error,'errorMakeSummary!!!!!')
-    res.status(500).json({ message: 'Failed to get transcript', error: error.message });
+    res.status(500).json({ message: error.message, error: error.message });
   }
 }
 
