@@ -45,6 +45,7 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
 if(!findVideo && videoId){
 
   const transcript = await YoutubeTranscript.fetchTranscript(videoId)
+  console.log(transcript,'before')
   if (!transcript || !Array.isArray(transcript)) {
     console.log("Error: Transcript is undefined or not an array!");
     // 이 부분에 대한 처리 추가
