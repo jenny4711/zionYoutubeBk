@@ -45,16 +45,17 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
 if(!findVideo && videoId){
 
   const transcript = await YoutubeTranscript.fetchTranscript(videoId)
-  if (!transcript || !Array.isArray(transcript)){
-    console.log(transcript,'transcript!!!!!!!!!!!!')
-    const transcriptData = JSON.stringify(transcript);
-    console.log(transcriptData,'rrreee');
-  }
-
-  transcript.map((item)=>{
-    textes.push(item.text)
-  })
-console.log(textes,'textes!')
+  if (!transcript || !Array.isArray(transcript)) {
+    console.log("Error: Transcript is undefined or not an array!");
+    // 이 부분에 대한 처리 추가
+} else {
+    transcript.map((item) => {
+        if (item && item.text) {
+            textes.push(item.text);
+        }
+    });
+    console.log("Textes:", textes);
+}
  let summaryORG = await createChatWithGoogle(textes,ask)
  let summary = await translateResult(summaryORG,lang)
 
