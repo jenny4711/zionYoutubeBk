@@ -13,7 +13,7 @@ const User = require('../model/user')
         summaryORG,
         lang,
         ask,
-        summary,
+         summary,
       })
 
       await newHistory.save()

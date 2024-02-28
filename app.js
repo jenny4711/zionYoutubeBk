@@ -23,7 +23,7 @@ mongoose
   .catch((err) => console.log("DB connection fail", err));
 
 //--------------------------------------------------
-cron.schedule('0 12 * * *',async () => {
+cron.schedule('0 24 * * *',async () => {
   console.log('크론 작업이 실행되었습니다.');
   console.log(new Date().toString());
   try{

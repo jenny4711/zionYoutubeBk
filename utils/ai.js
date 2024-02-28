@@ -36,8 +36,8 @@ const translateResult = async (story, lang) => {
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
-        { role: 'user', content: `Please translate this ${story} into ${lang}.  ` },
+        { role: 'system', content: `You are a ${lang} interpreter.` },
+        { role: 'user', content: `Please translate this ${story} into ${lang} and make it easier to understand.  ` },
       ],
     });
     console.log(response.choices[0].message.content,'length!!!!!!!!');
