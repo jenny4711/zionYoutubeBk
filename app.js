@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const cors=require("cors")
 const app=express()
 const indexRoutes = require('./routes/index');
-const { MongoClient } = require('mongodb');
 const cron = require('node-cron');
 const User =require('./model/user')
 require("dotenv").config()

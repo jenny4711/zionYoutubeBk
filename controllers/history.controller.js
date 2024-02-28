@@ -1,7 +1,7 @@
 const{ translateResult ,createChatWithGoogle } =require('../utils/ai') ;
 const History = require('../model/history')
 const historyController={};
-const youtubeTranscript = require('youtube-transcript');
+const{ YoutubeTranscript} = require('youtube-transcript') ;
 const User = require('../model/user')
  async function saveSummary({videoId,summaryORG,lang,ask,summary}){
   try{
@@ -44,7 +44,7 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
     }
 if(!findVideo && videoId){
 
-  const transcript = youtubeTranscript.default.fetchTranscript(videoId)
+  const transcript = await YoutubeTranscript.fetchTranscript(videoId)
   if (!transcript || !Array.isArray(transcript) || undefined){
     console.log(transcript,'transcript!!!!!!!!!!!!')
     const transcriptData = JSON.stringify(transcript);
