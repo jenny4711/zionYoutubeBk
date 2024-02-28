@@ -32,7 +32,7 @@ const User = require('../model/user')
 historyController.makeSummary=async (req,res)=>{
   try{
   const {videoId,lang,ask,email}=req.body;
-  console.log(ask,'ask-makeSummary!!!!!!!!!')
+  console.log(videoId,'ask-makeSummary!!!!!!!!!')
 
     const textes=[]
     const user = await User.findOne({ email });
