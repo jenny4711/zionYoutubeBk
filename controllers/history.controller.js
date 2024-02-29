@@ -2,6 +2,7 @@ const{ translateResult ,createChatWithGoogle } =require('../utils/ai') ;
 const History = require('../model/history')
 const historyController={};
 const{ YoutubeTranscript} = require('youtube-transcript') ;
+const { fetchTranscript } =require("youtube-fetch-transcript");
 const User = require('../model/user')
  async function saveSummary({videoId,summaryORG,lang,ask,summary}){
   try{
@@ -44,7 +45,7 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
     }
 if(!findVideo && videoId){
 
-  const transcript = await YoutubeTranscript.fetchTranscript("plRKZ8fWrMc")
+  const transcript = await fetchTranscript(videoId)
   console.log(transcript,'before')
   if (!transcript || !Array.isArray(transcript)) {
     console.log("Error: Transcript is undefined or not an array!");

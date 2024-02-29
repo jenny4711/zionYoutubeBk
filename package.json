@@ -20,6 +20,7 @@
     "mongoose": "^8.1.2",
     "node-cron": "^3.0.3",
     "openai": "^4.28.0",
+    "youtube-fetch-transcript": "^1.0.0",
     "youtube-transcript": "^1.0.6"
   }
 }
