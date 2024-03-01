@@ -1,8 +1,10 @@
 const{ translateResult ,createChatWithGoogle } =require('../utils/ai') ;
+const{ getSubtitles } =require('youtube-captions-scraper');
 const History = require('../model/history')
 const historyController={};
-const{ YoutubeTranscript} = require('youtube-transcript') ;
-const { fetchTranscript } =require("youtube-fetch-transcript");
+// const{ YoutubeTranscript} = require('youtube-transcript') ;
+// const { fetchTranscript } =require("youtube-fetch-transcript");
+const {getCaptions,downloadCaption} =require('../utils/api')
 const User = require('../model/user')
  async function saveSummary({videoId,summaryORG,lang,ask,summary}){
   try{
@@ -45,8 +47,13 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
     }
 if(!findVideo && videoId){
 console.log(videoId,'videoId........')
-  const transcript = await fetchTranscript(videoId)
-  console.log(transcript,'before')
+
+  const transcript= await getSubtitles({
+    videoID:videoId,
+    lang:'en',
+
+  })
+    console.log(transcript,'transcript!!!!!!!!!!!!!!!!!!1')
   if (!transcript || !Array.isArray(transcript)) {
     console.log("Error: Transcript is undefined or not an array!");
     // 이 부분에 대한 처리 추가

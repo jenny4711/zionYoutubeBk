@@ -15,7 +15,7 @@ const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
 
 const createChatWithGoogle = async (prompt, ask) => {
   const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-console.log(ask,'askCreateChatWithGoogle')
+console.log(prompt,'askCreateChatWithGoogle')
   //------------------------------------------------------------------------------------------------
   const result = await model.generateContentStream(`${ask} ${prompt}  `);
   console.log(result,'result!!!!!!!')
