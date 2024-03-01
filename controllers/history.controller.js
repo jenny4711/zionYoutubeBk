@@ -1,10 +1,7 @@
 const{ translateResult ,createChatWithGoogle } =require('../utils/ai') ;
-const{ getSubtitles } =require('youtube-captions-scraper');
 const History = require('../model/history')
 const historyController={};
-// const{ YoutubeTranscript} = require('youtube-transcript') ;
-// const { fetchTranscript } =require("youtube-fetch-transcript");
-const {getCaptions,downloadCaption} =require('../utils/api')
+const{ YoutubeTranscript} = require('youtube-transcript') ;
 const User = require('../model/user')
  async function saveSummary({videoId,summaryORG,lang,ask,summary}){
   try{
@@ -35,7 +32,7 @@ const User = require('../model/user')
 historyController.makeSummary=async (req,res)=>{
   try{
   const {videoId,lang,ask,email}=req.body;
-  
+  console.log(ask,'ask-makeSummary!!!!!!!!!')
 
     const textes=[]
     const user = await User.findOne({ email });
@@ -45,26 +42,16 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
     if(!videoId){
       return res.status(400).json({message:'VideoId is required'})
     }
-if(!findVideo && videoId){
-console.log(videoId,'videoId........')
+if(!findVideo){
 
-  const transcript= await getSubtitles({
-    videoID:videoId,
-    lang:'en',
-
+  const transcript = await YoutubeTranscript.fetchTranscript(videoId)
+  if (!transcript || !Array.isArray(transcript)){
+    console.log(transcript,'transcript!!!!!!!!!!!!')
+  }
+  transcript.map((item)=>{
+    textes.push(item.text)
   })
-    console.log(transcript,'transcript!!!!!!!!!!!!!!!!!!1')
-  if (!transcript || !Array.isArray(transcript)) {
-    console.log("Error: Transcript is undefined or not an array!");
-    // 이 부분에 대한 처리 추가
-} else {
-    transcript.map((item) => {
-        if (item && item.text) {
-            textes.push(item.text);
-        }
-    });
-    console.log("Textes:", textes);
-}
+console.log(textes,'textes!')
  let summaryORG = await createChatWithGoogle(textes,ask)
  let summary = await translateResult(summaryORG,lang)
 

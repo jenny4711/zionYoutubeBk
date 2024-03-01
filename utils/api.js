@@ -1,11 +1,26 @@
 const {google} = require('googleapis');
-
+const fetch = require('node-fetch')
 const fs = require('fs');
 require("dotenv").config()
-const youtube = google.youtube({
-  version: 'v3',
-  auth: process.env.YOUTUBE_API
-});
+const ClientID=process.env.YOUTUBE_CLIENTID
+
+
+
+const youtubeURL = async (videoId) => {
+  try {
+    const URL = `https://youtube.googleapis.com/youtube/v3/captions/${videoId}`;
+    const accessToken = ClientID; // OAuth2를 통해 받은 액세스 토큰
+    const res = await fetch(URL, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }
+    });
+    const data = await res.json();
+    console.log(data, 'data!!!!!!!');
+  } catch (error) {
+    console.log(error, 'errorurl!!!!!!!!!!!!!!!!!!!!!!!!!');
+  }
+};
 
 
 
@@ -53,4 +68,4 @@ async function getCaptions(videoId) {
 
 
 
-module.exports ={getCaptions,downloadCaption}
+module.exports ={getCaptions,downloadCaption,youtubeURL}
