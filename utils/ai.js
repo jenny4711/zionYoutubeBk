@@ -17,7 +17,7 @@ const createChatWithGoogle = async (prompt, ask) => {
   const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 console.log(prompt,'askCreateChatWithGoogle')
   //------------------------------------------------------------------------------------------------
-  const result = await model.generateContentStream(`${ask}   `);
+  const result = await model.generateContentStream(`${ask}  ${prompt} `);
   console.log(result,'result!!!!!!!')
   let text = '';
   for await (const chunk of result.stream) {
