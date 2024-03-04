@@ -30,11 +30,18 @@ const safetySettings = [
   threshold: HarmBlockThreshold.BLOCK_NONE,
   },
   ];
+
+  const generationConfig = {
+    temperature: 0.9,
+    topK: 1,
+    topP: 1,
+    maxOutputTokens: 2048,
+    };
   
   
 
 const createChatWithGoogle = async (prompt, ask) => {
-  const model = genAI.getGenerativeModel({ model: "gemini-pro"},safetySettings );
+  const model = genAI.getGenerativeModel({ model: "gemini-pro"},safetySettings ,generationConfig);
 console.log(prompt,'askCreateChatWithGoogle')
   //------------------------------------------------------------------------------------------------
   const result = await model.generateContentStream(`${ask}  ${prompt} `);
