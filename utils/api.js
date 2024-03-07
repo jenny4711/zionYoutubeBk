@@ -7,7 +7,7 @@
 // require("dotenv").config()
 const ClientID=process.env.YOUTUBE_CLIENTID
 const SECRET_KEY=process.env.YOUTUBE_SECRET
-
+const { getSubtitles, getVideoDetails } =require('youtube-caption-extractor')
 
 // const keyPath = path.join(__dirname, 'oauth2.keys.json');
 // let keys = {redirect_uris: ['']};
@@ -99,62 +99,23 @@ const SECRET_KEY=process.env.YOUTUBE_SECRET
 // }
 
 
-
-
-
-
-
-
-
-
-require('dotenv').config();
-const {google} = require('googleapis');
-const path = require('path');
-const fs = require('fs');
-
-const CLIENT_ID = process.env.YOUTUBE_CLIENTID;
-const CLIENT_SECRET = process.env.YOUTUBE_SECRET;
-const REDIRECT_URI = process.env.YOUTUBE_REDIRECT_URI;
-const apiKey="AIzaSyAynwGKWgtTw1mHLEGrXbGyqk1JZRr42j8"
-
-const oauth2Client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URI
-);
-
-const scopes = ['https://www.googleapis.com/auth/youtube.force-ssl','https://www.googleapis.com/auth/youtube.download'];
-const url = oauth2Client.generateAuthUrl({
-  access_type: 'offline', // 리프레시 토큰을 받기 위해 필요
-  scope: scopes
-});
-console.log(url,'url!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-async function getAndSetUserTokens(code) {
+const fetchSubtitles = async (videoID, lang = 'en') => {
   try {
-    console.log(code,'code!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    const { tokens } = await oauth2Client.getToken(code); // code를 사용하여 토큰 받기
-    oauth2Client.setCredentials(tokens); // 토큰을 OAuth2 클라이언트에 설정
+    let textes=[]
+    const subtitles = await getSubtitles({ videoID, lang });
+    subtitles.map((items)=>{
+      textes.push(items.text)
+      console.log(items,'items!!!!')
+    })
+   return textes
   } catch (error) {
-    console.log(code,'code')
-    console.error(`Error getting tokens: ${error}`);
+    console.error('Error fetching subtitles:', error);
   }
-}
+};
 
 
 
-async function downloadCaption(videoId, format = 'srt') {
-  const youtube = google.youtube({version: 'v3', auth: oauth2Client});
-  try {
-    const response = await youtube.captions.download({
-      id: videoId,
-      tfmt: format,
-      alt: 'media'
-    });
-    console.log(response.data, 'response');
-    // 캡션 내용을 파일로 저장할 수 있습니다.
-  } catch (error) {
-    console.error(`Error downloading caption: ${error}`);
-  }
-}
 
-module.exports = { downloadCaption,getAndSetUserTokens};
+
+
+module.exports = { fetchSubtitles};

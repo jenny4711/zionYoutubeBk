@@ -2,7 +2,8 @@ const{ translateResult ,createChatWithGoogle } =require('../utils/ai') ;
 const History = require('../model/history')
 const historyController={};
 const{ YoutubeTranscript} = require('youtube-transcript') ;
-const { getSubtitles } = require('youtube-captions-scraper')
+// const { getSubtitles } = require('youtube-captions-scraper')
+const {fetchSubtitles} =require('../utils/api')
 const User = require('../model/user')
 
  async function saveSummary({videoId,summaryORG,lang,ask,summary}){
@@ -36,7 +37,7 @@ historyController.makeSummary=async (req,res)=>{
   const {videoId,lang,ask,email}=req.body;
   console.log(ask,'ask-makeSummary!!!!!!!!!')
 
-    const textes=[]
+    // const textes=[]
     const user = await User.findOne({ email });
 if(user.credit <= 0)throw new Error("your credit is 0 ")
   let findVideo = await History.findOne({videoId,lang,ask});
@@ -46,17 +47,19 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
     }
 if(!findVideo){
 
-  let transcript = await YoutubeTranscript.fetchTranscript(videoId)
+  // let transcript = await YoutubeTranscript.fetchTranscript(videoId)
+  const textes = await fetchSubtitles(videoId);
+  // console.log(subtitles,'subtitle!!!!!!!!!!!!!');
 
- console.log(!transcript,'true or false!!!!!')
-  if (!transcript || !Array.isArray(transcript)){
-
+ console.log(textes,'true or false!!!!!')
+  if (!textes || !Array.isArray(textes)){
+console.log('error-fetchSubtitles!')
   
 
   }
-  transcript.map((item)=>{
-    textes.push(item.text)
-  })
+  // transcript.map(element => {
+  //   textes.push(element.text)
+  // })
 console.log(textes,'textes!')
  let summaryORG = await createChatWithGoogle(textes,ask)
  let summary = await translateResult(summaryORG,lang)
