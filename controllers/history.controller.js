@@ -83,7 +83,7 @@ throw new Error("Ai couldn't read summary. Please try again later!")
 
   }catch(error){
     console.log(error.message,'errorMsg!!!')
-    if (error.message.includes('Youtube Transcript')) {
+    if (error.message.includes('[YoutubeTranscript]')) {
       return res.status(404).json({ message: "Could not find the video by the provided VideoId. Please check the VideoId and try again.", error: error.message });
     } else if (error.message.includes('your credit is 0')) {
       // 사용자 크레딧이 0인 경우의 오류 처리
