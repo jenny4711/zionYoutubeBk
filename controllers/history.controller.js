@@ -47,7 +47,7 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
 if(!findVideo){
 
  let transcript = await YoutubeTranscript.fetchTranscript(videoId)
- console.log(transcript,'transcript!!!!!!!!!!!!!!!check')
+ console.log(transcript.error,'transcript!!!!!!!!!!!!!!!check')
   if (!transcript || !Array.isArray(transcript)){
 
     transcript= await getSubtitles({
@@ -84,7 +84,7 @@ throw new Error("Ai couldn't read summary. Please try again later!")
 }
 
   }catch(error){
-    console.log(error,'errorMakeSummary!!!!!')
+    
     res.status(500).json({ message: error.message, error: error.message });
   }
 }
