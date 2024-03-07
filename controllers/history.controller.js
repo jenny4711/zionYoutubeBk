@@ -50,7 +50,7 @@ console.log(videoId,'videoId!!!!!!!!!!!!!!!!!!!!!')
     const video = await youtube.getVideo(videoId)
     console.log(video,'video!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     const transcript=await video.getTranscript()
-    console.log(trans,'trans!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    console.log(transcript,'trans!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
   if (!transcript || !Array.isArray(textes)){
 console.log(transcript,'transcriptError!!!!')
