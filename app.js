@@ -6,12 +6,15 @@ const app=express()
 const indexRoutes = require('./routes/index');
 const cron = require('node-cron');
 const User =require('./model/user')
+const { google } = require('googleapis');
+const fs = require('fs');
+const path = require('path');
+
 require("dotenv").config()
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use('/zs',indexRoutes)
-
 
 
 const mongoURI = process.env.LOCAL_DB_ADDRESS;
@@ -51,8 +54,8 @@ cron.schedule('0 23 * * *',async () => {
 
 
 
-  app.listen(process.env.PORT || 5000,()=>{
-    console.log('server on');
-  })
-
+app.listen(5000, () => {
+  console.log('Server is running on port 5000');
+ 
+});
 
