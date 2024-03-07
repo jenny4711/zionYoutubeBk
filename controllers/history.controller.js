@@ -2,14 +2,13 @@ const{ translateResult ,createChatWithGoogle } =require('../utils/ai') ;
 const History = require('../model/history')
 const historyController={};
 const{ YoutubeTranscript} = require('youtube-transcript') ;
-// const { getSubtitles } = require('youtube-captions-scraper')
-const {fetchSubtitles} =require('../utils/api')
+
 const User = require('../model/user')
 
  async function saveSummary({videoId,summaryORG,lang,ask,summary}){
   try{
     const video=await History.findOne({videoId,lang,ask});
-    console.log(ask,'ask-saveSummary!!!!!!!')
+
     if(!video){
       const newHistory = new History({
         videoId,
@@ -35,7 +34,6 @@ const User = require('../model/user')
 historyController.makeSummary=async (req,res)=>{
   try{
   const {videoId,lang,ask,email}=req.body;
-  console.log(ask,'ask-makeSummary!!!!!!!!!')
 
     const textes=[]
     const user = await User.findOne({ email });
@@ -48,12 +46,10 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
 if(!findVideo){
 
    let transcript = await YoutubeTranscript.fetchTranscript(videoId)
-  // const textes = await fetchSubtitles(videoId);
-  // // console.log(subtitles,'subtitle!!!!!!!!!!!!!');
 
- console.log(!transcript,'true or false!!!!!')
+
   if (!transcript || !Array.isArray(textes)){
-console.log('error-fetchSubtitles!')
+console.log(transcript,'transcriptError!!!!')
   
 
   }
@@ -85,14 +81,14 @@ throw new Error("Ai couldn't read summary. Please try again later!")
     console.log(error.message,'errorMsg!!!')
     if (error.message.includes('[YoutubeTranscript]')) {
       return res.status(404).json({ message: "Could not find the video by the provided VideoId. Please check the VideoId and try again.", error: error.message });
-    } else if (error.message.includes('your credit is 0')) {
-      // 사용자 크레딧이 0인 경우의 오류 처리
+    } else if (error.message.includes('credit is 0')) {
+     
       return res.status(403).json({ message: "Your credit is 0. Please recharge your credit to use this service.", error: error.message });
-    } else if (error.message.includes('Ai couldn\'t read summary')) {
-      // AI 요약 생성 실패에 대한 오류 처리
+    } else if (error.message.includes('Google')) {
+  
       return res.status(500).json({ message: "AI couldn't generate a summary. Please try again later!", error: error.message });
     } else {
-      // 그 외의 모든 오류에 대한 일반적인 처리
+   
       return res.status(500).json({ message: "An unexpected error occurred. Please try again later.", error: error.message });
     }
     
