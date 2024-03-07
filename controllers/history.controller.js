@@ -8,7 +8,8 @@ const User = require('../model/user')
  async function saveSummary({videoId,summaryORG,lang,ask,summary}){
   try{
     const video=await History.findOne({videoId,lang,ask});
-
+  
+ 
     if(!video){
       const newHistory = new History({
         videoId,
@@ -44,8 +45,9 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
       return res.status(400).json({message:'VideoId is required'})
     }
 if(!findVideo && typeof videoId === 'string'){
-
-   let transcript = await YoutubeTranscript.fetchTranscript(videoId)
+  let videoIdArr=[]
+   videoIdArr.push(videoId)
+   let transcript = await YoutubeTranscript.fetchTranscript(videoIdArr)
 
 
   if (!transcript || !Array.isArray(textes)){
