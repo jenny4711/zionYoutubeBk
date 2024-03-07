@@ -46,19 +46,12 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
     }
 if(!findVideo){
 
-//  let transcript = await YoutubeTranscript.fetchTranscript(videoId)
-    let  transcript= await getSubtitles({
-      videoID: videoId, 
-      lang: 'en' 
-    }).then(captions => {
-      console.log(captions,'captiongetSubtitles!');
-      return captions
-    });
-    
+  let transcript = await YoutubeTranscript.fetchTranscript(videoId)
+
  console.log(!transcript,'true or false!!!!!')
   if (!transcript || !Array.isArray(transcript)){
 
-   
+  
 
   }
   transcript.map((item)=>{
