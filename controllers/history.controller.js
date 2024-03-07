@@ -82,6 +82,7 @@ throw new Error("Ai couldn't read summary. Please try again later!")
 }
 
   }catch(error){
+    console.log(error.message,'errorMsg!!!')
     if (error.message.includes('Youtube Transcript')) {
       return res.status(404).json({ message: "Could not find the video by the provided VideoId. Please check the VideoId and try again.", error: error.message });
     } else if (error.message.includes('your credit is 0')) {
