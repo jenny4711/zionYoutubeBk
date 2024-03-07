@@ -43,7 +43,7 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
     if(!videoId){
       return res.status(400).json({message:'VideoId is required'})
     }
-if(!findVideo){
+if(!findVideo && typeof videoId === 'string'){
 
    let transcript = await YoutubeTranscript.fetchTranscript(videoId)
 
