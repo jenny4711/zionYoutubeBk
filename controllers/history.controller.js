@@ -82,8 +82,11 @@ throw new Error("Ai couldn't read summary. Please try again later!")
 }
 
   }catch(error){
+    if(error.message.included('[Youtube Transcript]')){
+      res.status(500).json({ message: "Could not find the VideoId", error: error.message });
+    }
     
-    res.status(500).json({ message: error.message, error: error.message });
+
   }
 }
 
