@@ -2,9 +2,9 @@ const{ translateResult ,createChatWithGoogle } =require('../utils/ai') ;
 const History = require('../model/history')
 const historyController={};
 const{ YoutubeTranscript} = require('youtube-transcript') ;
-
+const { Client, MusicClient ,Transcript} = require("youtubei");
 const User = require('../model/user')
-
+const youtube = new Client();
  async function saveSummary({videoId,summaryORG,lang,ask,summary}){
   try{
     const video=await History.findOne({videoId,lang,ask});
@@ -47,7 +47,10 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
 if(!findVideo && typeof videoId === 'string'){
 console.log(videoId,'videoId!!!!!!!!!!!!!!!!!!!!!')
    let transcript =  await YoutubeTranscript.fetchTranscript(videoId)
-
+    const video = await youtube.getVideo(videoId)
+    console.log(video,'video!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    const trans=await video.getTranscript()
+    console.log(trans,'trans!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
 
   if (!transcript || !Array.isArray(textes)){
 console.log(transcript,'transcriptError!!!!')
