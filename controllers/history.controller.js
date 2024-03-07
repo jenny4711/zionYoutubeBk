@@ -82,8 +82,17 @@ throw new Error("Ai couldn't read summary. Please try again later!")
 }
 
   }catch(error){
-    if(error.message.included('[Youtube Transcript]')){
-      res.status(500).json({ message: "Could not find the VideoId", error: error.message });
+    if (error.message.includes('Youtube Transcript')) {
+      return res.status(404).json({ message: "Could not find the video by the provided VideoId. Please check the VideoId and try again.", error: error.message });
+    } else if (error.message.includes('your credit is 0')) {
+      // 사용자 크레딧이 0인 경우의 오류 처리
+      return res.status(403).json({ message: "Your credit is 0. Please recharge your credit to use this service.", error: error.message });
+    } else if (error.message.includes('Ai couldn\'t read summary')) {
+      // AI 요약 생성 실패에 대한 오류 처리
+      return res.status(500).json({ message: "AI couldn't generate a summary. Please try again later!", error: error.message });
+    } else {
+      // 그 외의 모든 오류에 대한 일반적인 처리
+      return res.status(500).json({ message: "An unexpected error occurred. Please try again later.", error: error.message });
     }
     
 
