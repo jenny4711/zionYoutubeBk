@@ -46,9 +46,9 @@ if(user.credit <= 0)throw new Error("your credit is 0 ")
     }
 if(!findVideo && typeof videoId === 'string'){
 console.log(videoId,'videoId!!!!!!!!!!!!!!!!!!!!!')
-    let transcript =  await YoutubeTranscript.fetchTranscript(videoId)
-   const trans=await youtube.getVideoTranscript(videoId)
-   console.log(trans,'trans')
+    //let transcript =  await YoutubeTranscript.fetchTranscript(videoId)
+   const transcript=await youtube.getVideoTranscript(videoId)
+   console.log(transcript,'trans')
 
   if (!transcript || !Array.isArray(textes)){
 console.log(transcript,'transcriptError!!!!')
