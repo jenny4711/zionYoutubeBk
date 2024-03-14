@@ -38,7 +38,18 @@ cron.schedule('0 23 * * *',async () => {
     }else{
       console.log(user,'all status')
     }
+
+
+    //--------------------------------
+    const allUsers = await User.find({}).toArray(); 
+    for (let user of allUsers) {
+      if (user.myRef && user.myRef.length > 0) {
    
+        await User.updateOne({ _id: user._id }, { $set: { credit: user.myRef.length * 20 } });
+      }
+    }
+    
+   //----------------------------------
 
   }catch(error){
     console.error('크레딧 업데이트 중 에러가 발생했습니다:', error);

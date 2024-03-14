@@ -95,6 +95,18 @@ userController.editLang = async (req, res) => {
   }
 };
 
+
+//-----------ref------------
+// userController.editMyRef=async(req,res)=>{
+//   try{
+//     const _id = req.params.id;
+//     const friend = req.params.id;
+//     const user = await User.findOne({_id})
+//     user.myRef.push(friend.email)
+
+//   }catch(error){}
+// }
+
 userController.editPromptStyle = async (req, res) => {
   try {
     const email = req.params.id;
