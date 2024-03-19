@@ -122,15 +122,22 @@ userController.editMyRef=async(req,res)=>{
     const _id = req.params.userId;
     const friend = req.params.refEmail;
     const user = await User.findOne({_id})
-    if(user.myRef.includes(friend)){
-      return res.status(400).json({message:'you alread added it'})
+    const checkUser = await User.findOne({email:friend})
+    console.log(friend,'friend')
+    console.log(_id,'_id')
+    console.log(user,'user')
+    if(checkUser || user.myRef.includes(friend)){
+      return res.status(400).json({message:'you already added it'})
     }else{
       user.myRef.push(friend)
+      await user.save();
+      return res.status(200).json({message:'addRef is saved'})
     }
    
 
   }catch(error){
     console.log(error,'editMyRef!')
+    return res.status(400).json({message:'you already added it',error})
   }
 }
 
