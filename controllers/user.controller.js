@@ -43,6 +43,8 @@ userController.showUserInfo=async(req,res)=>{
   try{
     const {email}=req.params;
     const user = await User.fineOne({email})
+    console.log(user)
+    console.log(email,'showUserInfo')
     if(!user)throw new Error("couldn't find user")
     return res.status(200).json({status:'success-showUserInfo',data:user})
   }catch(error){
