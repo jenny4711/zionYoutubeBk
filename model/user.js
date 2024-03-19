@@ -42,6 +42,9 @@ const userSchema = Schema({
     type:Number,
     
   },
+  myHistory:{
+    type:Array,
+  }
 },{timestamps:true})
 userSchema.method.toJSON=function(){
   const obj = this._doc;

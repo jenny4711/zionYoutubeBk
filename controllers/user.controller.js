@@ -95,6 +95,25 @@ userController.editLang = async (req, res) => {
   }
 };
 
+userController.editMyHistory=async(req,res)=>{
+  const {videoId,email} = req.params;
+  console.log(videoId,'videoId-editMyHistory')
+  console.log(email,'editMyHistory')
+  try{
+    const user = await User.findOne({email});
+    if(!user){
+      return res.status(400).json({message:'User not found'})
+    }
+    user.myHistory.unshift(videoId);
+    await user.save();
+    return res.status(200).json({status:'updatedHistory',user})
+  }catch(error){
+    console.error("Error updating user history:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+
 
 //-----------ref------------
 // userController.editMyRef=async(req,res)=>{
