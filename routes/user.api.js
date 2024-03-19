@@ -7,9 +7,9 @@ router.post("/",userController.autoSignUp);
 router.post("/subcredit",userController.subtractCredit)
 router.put("/editLang/:id",userController.editLang)
 router.put("/editPromptStyle/:id",userController.editPromptStyle)
-router.get('/',userController.showUserInfo)
+router.get('/:email',userController.showUserInfo)
 router.put('/addHistory/:videoId/:email',userController.editMyHistory)
-
+router.put('/addRef/:userId/:refEmail',userController.editMyRef)
 
 
 

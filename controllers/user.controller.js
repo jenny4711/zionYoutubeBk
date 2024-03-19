@@ -116,15 +116,22 @@ userController.editMyHistory=async(req,res)=>{
 
 
 //-----------ref------------
-// userController.editMyRef=async(req,res)=>{
-//   try{
-//     const _id = req.params.id;
-//     const friend = req.params.id;
-//     const user = await User.findOne({_id})
-//     user.myRef.push(friend.email)
+userController.editMyRef=async(req,res)=>{
+  try{
+    const _id = req.params.userId;
+    const friend = req.params.refEmail;
+    const user = await User.findOne({_id})
+    if(user.myRef.includes(friend)){
+      return res.status(400).json({message:'you alread added it'})
+    }else{
+      user.myRef.push(friend)
+    }
+   
 
-//   }catch(error){}
-// }
+  }catch(error){
+    console.log(error,'editMyRef!')
+  }
+}
 
 userController.editPromptStyle = async (req, res) => {
   try {
