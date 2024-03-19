@@ -42,7 +42,7 @@ userController.autoSignUp = async (req, res) => {
 userController.showUserInfo=async(req,res)=>{
   try{
     const {email}=req.params;
-    const user = await User.fineOne({email})
+    const user = await User.findOne({email})
     console.log(user)
     console.log(email,'showUserInfo')
     if(!user)throw new Error("couldn't find user")
