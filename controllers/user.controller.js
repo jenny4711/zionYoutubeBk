@@ -98,12 +98,14 @@ userController.editLang = async (req, res) => {
 
 userController.editMyHistory=async(req,res)=>{
   const {videoId,email} = req.params;
-  console.log(videoId,'videoId-editMyHistory')
-  console.log(email,'editMyHistory')
+  
   try{
     const user = await User.findOne({email});
     if(!user){
       return res.status(400).json({message:'User not found'})
+    }
+    if(!user.myHistory){
+      user.myHistory=[];
     }
     user.myHistory.unshift(videoId);
     await user.save();
