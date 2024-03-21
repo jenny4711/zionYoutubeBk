@@ -35,7 +35,7 @@ const safetySettings = [
     temperature: 0,
     topK: 1,
     topP: 1,
- 
+    maxOutputToken:400,
     };
   
   
