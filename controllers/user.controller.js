@@ -165,4 +165,18 @@ userController.editPromptStyle = async (req, res) => {
   }
 };
 
+
+
+//-----------Delete--------------------
+
+userController.deleteUser=async(req,res)=>{
+  try{
+    const deletedUser = await User.findByIdAndDelete(req.params.id)
+    res.status(200).json({status:"Your account is deleted",data:deletedUser})
+  }catch(error){
+    console.log(error,'deleteUser-error')
+    res.status(400).json({status:"delete-fail",error:error})
+  }
+}
+
 module.exports = userController;

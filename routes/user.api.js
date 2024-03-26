@@ -10,7 +10,7 @@ router.put("/editPromptStyle/:id",userController.editPromptStyle)
 router.get('/:email',userController.showUserInfo)
 router.put('/addHistory/:videoId/:email',userController.editMyHistory)
 router.put('/addRef/:userId/:refEmail',userController.editMyRef)
-
+router.delete("/:id",userController.deleteUser)
 
 
 
