@@ -30,6 +30,7 @@ cron.schedule('0 23 * * *',async () => {
   console.log(new Date().toString());
   try{
     const user = User.find({status:'free'})
+    const allUsers = await User.find({}).toArray(); 
     if(user){
       await user.updateMany({},{$set:{credit:20}});
       console.log('모든 사용자의 크레딧이 성공적으로 업데이트되었습니다.');
@@ -39,15 +40,19 @@ cron.schedule('0 23 * * *',async () => {
       console.log(user,'all status')
     }
 
-
-    //--------------------------------
-    const allUsers = await User.find({}).toArray(); 
+  if(allUser){
     for (let user of allUsers) {
       if (user.myRef && user.myRef.length > 0) {
    
-        await User.updateOne({ _id: user._id }, { $set: { credit: user.myRef.length * 20 } });
+        await User.updateOne({ _id: user._id }, { $set: { credit: user.myRef.length * 10 } });
+      }else{
+        console.log(user,'something wrong for allUser')
       }
     }
+  }
+    //--------------------------------
+  
+    
     
    //----------------------------------
 
