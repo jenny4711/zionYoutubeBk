@@ -27,7 +27,7 @@ userController.autoSignUp = async (req, res) => {
       status,
       lang,
       promptStyle,
-      credit:10,
+      credit:20,
     });
     await newUser.save();
     console.log(newUser,'newUser')
